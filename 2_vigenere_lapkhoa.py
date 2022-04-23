@@ -17,8 +17,7 @@ def decryption(cyphertext , key):
 
     return plaintext
 
-plaintext = "moneymakesth"
-key = "nopain"
+plaintext = "bettersafeth"
+key = "itsasm"
 
 print(encryption(plaintext,key))
-print(decryption("zccegznytsbu",key))

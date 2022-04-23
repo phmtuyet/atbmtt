@@ -14,5 +14,7 @@ def decryption(cyphertext, key):
     return plaintext
 
 plaintext = "loveisblindlovei"
-
-print(encryption(plaintext,8))
+enc = encryption(plaintext,8)
+dec = decryption(enc,8)
+print(enc)
+print(dec)

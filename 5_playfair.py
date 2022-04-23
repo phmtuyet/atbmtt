@@ -17,23 +17,16 @@ def createMatrixKey(key):
     key = suakytuJ(key)
     matrixKey = [[],[],[],[],[]]
 
+    key+=bangchucai
     newKey = ""      #key moi khong bi trung
     for x in key:
         if(x in newKey):
             continue
         newKey+=x
 
-    for i in range(0,len(newKey)):
+    for i in range(0,25):
         matrixKey[i//5].append(newKey[i])
     
-    indexInMatrix = len(newKey)    #vi tri tai ma tran dang chua co ky tu 
-              
-    for x in bangchucai:
-        if( x in newKey):
-            continue
-        matrixKey[indexInMatrix//5].append(x)
-        indexInMatrix+=1
-       
     return matrixKey
 
 def encryption(plaintext, key):
@@ -42,19 +35,23 @@ def encryption(plaintext, key):
 
     matrixKey = createMatrixKey(key)
     doubleChar = []
-
-    for i in range(0,len(plaintext)+1,2):
-        if(i==len(plaintext)-1):            #trường hợp bị lẻ ký tự cuối cùng
-            plaintext+="q"
-
+    print(matrixKey)
+    for i in range(0,len(plaintext)-1,2):
         if(plaintext[i]==plaintext[i+1]):
             charExtra = 'x'
             if(plaintext[i+1]=='x'):
                 charExtra = 'y'
-            plaintext = plaintext[0:i+1]+charExtra+plaintext[i+1:len(plaintext)]
-
+            plaintext = plaintext[:i+1]+charExtra+plaintext[i+1:]
         doubleChar.append(plaintext[i]+plaintext[i+1])
+    
+    if(len(plaintext)%2!=0):
+        if(plaintext[len(plaintext)-1]=="q"):
+            plaintext+="x"
+        else:
+            plaintext+="q"
+        doubleChar.append(plaintext[len(plaintext)-2:])
 
+    print(doubleChar)
     for x in doubleChar:
         char1 = x[0]
         char2 = x[1]
@@ -104,8 +101,9 @@ def decryption(cyphertext, key):
 
     doubleChar = []
 
-    for i in range(0,len(cyphertext),2):
+    for i in range(0,len(cyphertext)-1,2):
         doubleChar.append(cyphertext[i]+cyphertext[i+1])
+
     
     for x in doubleChar:
         char1 = x[0]
@@ -147,8 +145,12 @@ def decryption(cyphertext, key):
         plaintext += char1+char2
     return plaintext
 
-print(encryption("balloon","monarchy"))
-print(decryption("ibsupmna","monarchy"))
+plaintext = "loveisblindl"
+key = "honesty"
+enc = encryption(plaintext,key)
+dec = decryption(enc,key)
+print(enc)
+print(dec)
 
 
                 
